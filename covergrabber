@@ -13,6 +13,7 @@ def download_image(image_url, save_path):
                 for chunk in response.iter_content(1024):  
                     file.write(chunk)
             print(f"Image successfully downloaded: {save_path}")
+            sys.exit()
         else:
             print(f"Failed to retrieve image. Status code: {response.status_code}")
     except Exception as e:
@@ -49,12 +50,9 @@ if __name__ == "__main__":
     for i in h1_tags:
         title = i.get_text()
 
-    for img in img_tags:
-        try:
-            if img['loading'] == "eager":
-                download_image(img['src'], title + ".png")
-        except:
-            print("Script either broken or outdated! (Or user error occured)")
-
+    for img in img_tags: 
+        if img['loading'] == "eager":
+            download_image(img['src'], title + ".png")
+            sys.exit()
 
 
